@@ -1,0 +1,32 @@
+run:
+  log_dir: logs
+  num_learning_iterations: 500
+
+env:
+  friction_ratio_range: [0.5, 1.5]
+  mass_shift_range: [-0.2, 0.2]
+  com_shift_range: [-0.02, 0.02]
+  lin_vel_x_range: [-0.5, 0.5]
+  lin_vel_y_range: [-0.5, 0.5]
+  ang_vel_range: [-0.5, 0.5]
+
+train:
+  num_steps_per_env: 24
+  obs_groups:
+    actor: [obs]
+    critic: [obs]
+  save_interval: 20
+  logger: tensorboard
+  run_name: puppy
+  algorithm:
+    class_name: PPO
+  actor:
+    class_name: MLPModel
+    hidden_dims: [512, 256, 128]
+    obs_normalization: True
+    distribution_cfg:
+      class_name: GaussianDistribution
+  critic:
+    class_name: MLPModel
+    hidden_dims: [512, 256, 128]
+    obs_normalization: True
